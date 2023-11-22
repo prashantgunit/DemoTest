@@ -47,6 +47,23 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    flavorDimensions += "environment"
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            applicationIdSuffix = ".dev"
+        }
+
+        create("prod"){
+            dimension = "environment"
+            applicationIdSuffix = ".prod"
+        }
+        /*prod {
+            dimension "environment"
+            // No applicationIdSuffix or versionNameSuffix for the production flavor
+        }*/
+    }
 }
 
 dependencies {
