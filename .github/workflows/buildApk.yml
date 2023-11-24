@@ -52,11 +52,8 @@ jobs:
 
       # Create APK Debug
       - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDevDebug assembleProdDebug
 
-      # Create APK DevDebug
-      - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
-        run: ./gradlew assembleDevDebug
 
       # Create APK Release
      # - name: Build apk release project (APK) - ${{ env.main_project_module }} module

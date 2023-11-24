@@ -50,12 +50,12 @@ android {
 
     flavorDimensions += "environment"
     productFlavors {
-        create("dev") {
+        create("Dev") {
             dimension = "environment"
             applicationIdSuffix = ".dev"
         }
 
-        create("prod"){
+        create("Prod"){
             dimension = "environment"
             applicationIdSuffix = ".prod"
         }
