@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -19,6 +21,9 @@ android {
             useSupportLibrary = true
         }
     }
+
+    val keystorePropertiesFile = rootProject.file("keystore.properties")
+    val readKeystorePropertiesFile = readProperties(keystorePropertiesFile)
 
     buildTypes {
         release {
@@ -47,17 +52,36 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    signingConfigs{
+        create("devConfig") {
+            storeFile =
+                file("${rootDir}/keystores/" + readKeystorePropertiesFile["storeFile"])
+            storePassword = readKeystorePropertiesFile["storePassword"].toString()
+            keyAlias = readKeystorePropertiesFile["keyAlias"].toString()
+            keyPassword = readKeystorePropertiesFile["keyPassword"].toString()
+        }
+
+        create("prodConfig") {
+            storeFile =
+                file("${rootDir}/keystores/" + readKeystorePropertiesFile["storeFile"])
+            storePassword = readKeystorePropertiesFile["storePassword"].toString()
+            keyAlias = readKeystorePropertiesFile["keyAlias"].toString()
+            keyPassword = readKeystorePropertiesFile["keyPassword"].toString()
+        }
+    }
 
     flavorDimensions += "environment"
     productFlavors {
         create("Dev") {
             dimension = "environment"
             applicationIdSuffix = ".dev"
+            signingConfig = signingConfigs["devConfig"]
         }
 
         create("Prod"){
             dimension = "environment"
             applicationIdSuffix = ".prod"
+            signingConfig = signingConfigs["prodConfig"]
         }
         /*prod {
             dimension "environment"
@@ -83,4 +107,10 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+
+fun readProperties(propertiesFile: File) = Properties().apply {
+    propertiesFile.inputStream().use { fis ->
+        load(fis)
+    }
 }
