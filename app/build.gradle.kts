@@ -75,13 +75,13 @@ android {
         create("Dev") {
             dimension = "environment"
             applicationIdSuffix = ".dev"
-            signingConfig = signingConfigs["devConfig"]
+//            signingConfig = signingConfigs["devConfig"]
         }
 
         create("Prod"){
             dimension = "environment"
             applicationIdSuffix = ".prod"
-            signingConfig = signingConfigs["prodConfig"]
+//            signingConfig = signingConfigs["prodConfig"]
         }
         /*prod {
             dimension "environment"
